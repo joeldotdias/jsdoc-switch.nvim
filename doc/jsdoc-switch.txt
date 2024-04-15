@@ -14,7 +14,7 @@ Introduction                                                 *jsdoc-switch-nvim*
  JSDoc is a solid alternative to typescript when you want to avoid an additional
  build step and write regular javascript. However, you might not want to use this
  this all the time. While your program still runs, the lsp warnings tend to get
- annoying when checking isn't even required. Manually changing the settings in the
+ annoying when checking isnt even required. Manually changing the settings in the
  config file is also not a viable option. This was the motivation behind this
  plugin. It lets you turn on or off and toggle the current JSDoc config while
  preserving the rest of your server config.
@@ -147,7 +147,7 @@ C.make_config()                                                  *C.make_config*
 
     Usage: ~
 >lua
-        require('jsdoc-switch).make_config()
+        require('jsdoc-switch').make_config()
 <
 
 
