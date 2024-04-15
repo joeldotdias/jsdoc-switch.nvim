@@ -28,7 +28,7 @@ local C = {}
 
 
 --- Returns the default jsdoc-switch config
----@usage `C.get_default_config()`
+---@usage `require('jsdoc-switch.config').get_default_config()`
 function C.get_default_config()
     return {
         keys = {
@@ -42,7 +42,7 @@ end
 
 --- Creates the configuration by merging user_config the default jsdoc-switch config
 ---@see jsdoc-switch.setup
----@usage `require('jsdoc-switch').make_config()`
+---@usage `require('jsdoc-switch.config').make_config()`
 function C.make_config(user_config)
     local default_config = C.get_default_config()
     for k, v in pairs(user_config) do
