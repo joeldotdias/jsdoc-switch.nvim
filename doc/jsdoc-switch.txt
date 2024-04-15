@@ -135,7 +135,7 @@ C.get_default_config()                                    *C.get_default_config*
 
     Usage: ~
 >lua
-        C.get_default_config()
+        require('jsdoc-switch.config').get_default_config()
 <
 
 
@@ -147,7 +147,7 @@ C.make_config()                                                  *C.make_config*
 
     Usage: ~
 >lua
-        require('jsdoc-switch').make_config()
+        require('jsdoc-switch.config').make_config()
 <
 
 
