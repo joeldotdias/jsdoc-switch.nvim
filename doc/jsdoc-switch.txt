@@ -1,0 +1,154 @@
+                                 *jsdoc-switch*
+                     Toggle JSDoc checking on and off at will
+
+==============================================================================
+Table of Contents                                        *jsdoc-switch.contents*
+
+Introduction ··············································· |jsdoc-switch-nvim|
+Setup ····················································· |jsdoc-switch.setup|
+Configuration ············································ |jsdoc-switch.config|
+
+==============================================================================
+Introduction                                                 *jsdoc-switch-nvim*
+
+ JSDoc is a solid alternative to typescript when you want to avoid an additional
+ build step and write regular javascript. However, you might not want to use this
+ this all the time. While your program still runs, the lsp warnings tend to get
+ annoying when checking isn't even required. Manually changing the settings in the
+ config file is also not a viable option. This was the motivation behind this
+ plugin. It lets you turn on or off and toggle the current JSDoc config while
+ preserving the rest of your server config.
+
+==============================================================================
+Setup                                                       *jsdoc-switch.setup*
+
+ The `setup()` function must be called to create the default keymaps when the plugin
+ loads. This can be overridden by passing your custom config which will be merged with
+ the default configuration
+
+M.setup({user_config?})                                                *M.setup*
+     Sets up the plugin according to provided configuration
+
+    Parameters: ~
+        {user_config?}  (JsdocSwitchConfig)
+
+    See: ~
+        |jsdoc-switch.config|
+
+    Usage: ~
+>lua
+         To use the default config, simply call the setup function
+         require('jsdoc-switch').setup()
+
+         In case you want to pass custom config, there are two options
+         `1. Custom keymaps`
+         Send your own choice of keymaps to the setup function
+        >
+             require('jsdoc-switch').setup({
+                 keys = {
+                     toggle = '<leader>jsm',
+                     checkStart = '<leader>jso',
+                     checkEnd = '<leader>jsn'
+                 }
+             })
+        <
+
+         This will override the default keymaps with the ones provided by you. If a keymap
+         isnt provided the default keymap for that function will be used
+
+         `2. Custom functions`
+         You can use the toggle(), startJsdoc() and stopJsdoc() functions to write your own
+         custom functions to further modify any behaviour when the state is toggled. To do
+         this, set auto_set_keys to false. Note that in this case all keymaps have to be set
+         manually
+        >
+             local switch = require('jsdoc-switch')
+             vim.keymap.set('n', '<leader>jsn', function()
+                 switch.stopJsdoc()
+                 print('Goodbye JSDoc')
+             end)
+             -- and so on for the other functions
+        <
+<
+
+
+M.stopJsdoc()                                                      *M.stopJsdoc*
+     This stops JSDoc checking
+
+    Usage: ~
+>lua
+        require('jsdoc-switch').stopJsdoc()
+<
+
+
+M.startJsdoc()                                                    *M.startJsdoc*
+     This starts JSDoc checking
+
+    Usage: ~
+>lua
+        require('jsdoc-switch').startJsdoc()
+<
+
+
+M.toggle()                                                            *M.toggle*
+     This toggles the current state of JSDoc checking
+
+    Usage: ~
+>lua
+        require('jsdoc-switch').toggle()
+<
+
+
+JsdocKeys                                                            *JsdocKeys*
+
+    Fields: ~
+        {toggle?}      (string)
+        {checkStart?}  (string)
+        {checkEnd?}    (string)
+
+
+JsdocSwitchConfig                                            *JsdocSwitchConfig*
+
+    Fields: ~
+        {keys}  (JsdocKeys)
+
+
+==============================================================================
+Configuration                                              *jsdoc-switch.config*
+
+ Given below is the default config for |jsdoc-switch.setup|. To modify this with
+ your custom config, change the options according to your needs and send it to
+ the `setup()` function.
+>
+     {
+         keys = {
+             toggle = "<leader>jsd",
+             checkStart = "<leader>jss",
+             checkEnd = "<leader>jse",
+         },
+         auto_set_keys = true,
+     }
+<
+
+C.get_default_config()                                    *C.get_default_config*
+     Returns the default jsdoc-switch config
+
+    Usage: ~
+>lua
+        C.get_default_config()
+<
+
+
+C.make_config()                                                  *C.make_config*
+     Creates the configuration by merging user_config the default jsdoc-switch config
+
+    See: ~
+        |jsdoc-switch.setup|
+
+    Usage: ~
+>lua
+        require('jsdoc-switch).make_config()
+<
+
+
+vim:tw=78:ts=8:noet:ft=help:norl:
