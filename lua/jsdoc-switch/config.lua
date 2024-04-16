@@ -26,7 +26,6 @@ local C = {}
 ---<
 ---@brief ]]
 
-
 --- Returns the default jsdoc-switch config
 ---@usage `require('jsdoc-switch.config').get_default_config()`
 function C.get_default_config()

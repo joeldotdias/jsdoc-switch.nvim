@@ -5,8 +5,6 @@
 
 ---@toc jsdoc-switch.contents
 
-
-
 ---@mod jsdoc-switch-nvim Introduction
 ---@brief [[
 --- JSDoc is a solid alternative to typescript when you want to avoid an additional
@@ -27,7 +25,6 @@
 
 local M = {}
 local helpers = require("jsdoc-switch.helpers")
-
 
 --- Sets up the plugin according to provided configuration
 ---@param user_config? JsdocSwitchConfig
@@ -67,21 +64,12 @@ local helpers = require("jsdoc-switch.helpers")
 ---<
 ---@usage ]]
 function M.setup(user_config)
-    local ok, _ = pcall(require, 'lspconfig')
-    if not ok then
-        print("This plugin requires nvim-lspconfig")
-        return
-    end
-
     local config = require("jsdoc-switch.config").make_config(user_config or {})
 
     if config.auto_set_keys then
-        local toggleKey = config.keys.toggle
-        local startKey = config.keys.checkStart
-        local endKey = config.keys.checkEnd
-        helpers.jsdoc_key(startKey, true)
-        helpers.jsdoc_key(endKey, false)
-        helpers.jsdoc_key(toggleKey)
+        helpers.jsdoc_key(config.keys.checkStart, true)
+        helpers.jsdoc_key(config.keys.checkEnd, false)
+        helpers.jsdoc_key(config.keys.toggle)
     end
 end
 
