@@ -1,6 +1,6 @@
 # jsdoc-switch.nvim
 
-A tiny plugin for toggling jsdoc checking while preserving the rest of your configuration (pretty sure about the latter part)
+A tiny plugin for toggling jsdoc checking while preserving the rest of your lsp configuration
 
 ## Why
 I like JSDoc but not all the time. Needed a way to quickly turn it on or off based on the task I was doing.
@@ -46,9 +46,9 @@ use {
 ## Usage
 The plugin provides you with the following default keymaps
 ```lua
-`<leader>jsd` => Toggles JSDoc checking on or off based on the current state
-`<leader>jss` => Turns on JSDoc checking
-`<leader>jse` => Turns off JSDoc checking
+'<leader>jsd' => Toggles JSDoc checking on or off based on the current state
+'<leader>jss' => Turns on JSDoc checking
+'<leader>jse' => Turns off JSDoc checking
 ```
 
 ## Configuration
@@ -61,7 +61,8 @@ The plugin provides you with the following default keymaps
         checkStart = "<leader>jss",
         checkEnd = "<leader>jse"
     },
-    auto_set_keys = true -- Creates keymaps automatically when plugin is loaded
+    auto_set_keys = true, -- Creates keymaps automatically when plugin is loaded
+    notify = true, -- Display a notification when jsdoc checking is toggled
 }
 ```
 
@@ -76,20 +77,34 @@ require('jsdoc-switch').setup({
 ```
 
 - If you wish to create functions for yourself, set auto_set_keys to false and use the following functions
-- toggle()
-- startJsdoc()
-- stopJsdoc()
+    - toggle()
+    - startJsdoc()
+    - stopJsdoc()
+- You are also provided with the following commands
+    - JsdocSwitchToggle
+    - JsdocSwitchStart
+    - JsdocSwitchStop
 
 **Example config**
 ```lua
 local switch = require('jsdoc-switch')
-vim.keymap.set('n', '<leader>jsh', function()
+switch.setup({
+    auto_set_keys = false,
+    notify = false -- Disable notifications or print your custom messages
+})
+vim.keymap.set('n', '<leader>jds', function()
     switch.startJsdoc()
     print("Well, hello JSDoc")
 end)
--- In this case, keymaps will have to be manually set for other functions as well
+vim.keymap.set('n', '<leader>jdt', '<cmd>JsdocSwitchToggle<CR>')
+vim.keymap.set('n', '<leader>jdn', function()
+    vim.cmd("JsdocSwitchStop")
+    print("Goodbye Jsdoc")
+end)
 ```
 
 **P.S.** This is not an elegant plugin in any way but it works. Could be helpful for anyone not wanting to use JSDoc all the time or wanting to try out how it feels.
 
 If this plugin helped you, give it a ⭐ so my grandma thinks I'm cool
+
+A big thank you to [numToStr](https://github.com/numToStr) for [this great tool](https://github.com/numToStr/lemmy-help) which makes docgen so simple

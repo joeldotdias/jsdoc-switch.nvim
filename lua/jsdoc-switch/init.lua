@@ -18,16 +18,16 @@
 
 ---@mod jsdoc-switch.setup Setup
 ---@brief [[
---- The `setup()` function must be called to create the default keymaps when the plugin
---- loads. This can be overridden by passing your custom config which will be merged with
---- the default configuration
+--- The `setup()` function must be called to create the default keymaps (unless specified
+--- otherwise) when the plugin loads. This can be overridden by passing your custom config
+--- which will be merged with the default configuration
 ---@brief ]]
 
 local M = {}
 local helpers = require("jsdoc-switch.helpers")
 
 --- Sets up the plugin according to provided configuration
----@param user_config? JsdocSwitchConfig
+---@param opts? JsdocSwitchConfig
 ---@see jsdoc-switch.config
 ---@usage [[
 --- To use the default config, simply call the setup function
@@ -56,15 +56,23 @@ local helpers = require("jsdoc-switch.helpers")
 --- manually
 --->
 ---     local switch = require('jsdoc-switch')
+---     switch.setup({
+---         auto_set_keys = false
+---     })
 ---     vim.keymap.set('n', '<leader>jsn', function()
 ---         switch.stopJsdoc()
 ---         print('Goodbye JSDoc')
 ---     end)
+---     --------------- OR -----------------------
+---     -- use the commands provided
+---     vim.keymap.set('n', '<leader>jdt', '<cmd>JsdocSwitchToggle<CR>')
+---     -- see |jsdoc-switch.usercmds|
 ---     -- and so on for the other functions
 ---<
 ---@usage ]]
-function M.setup(user_config)
-    local config = require("jsdoc-switch.config").make_config(user_config or {})
+function M.setup(opts)
+    local config = require("jsdoc-switch.config")
+    config.merge_user_opts(opts or {});
 
     if config.auto_set_keys then
         helpers.jsdoc_key(config.keys.checkStart, true)

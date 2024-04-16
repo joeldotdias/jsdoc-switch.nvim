@@ -27,7 +27,10 @@ function H.switch(flag)
                 capabilities = capabilities,
             })
 
-            vim.notify("JSDoc is now turned " .. (new_opt and "on" or "off"), vim.log.levels.INFO)
+            if require("jsdoc-switch.config").notify then
+                vim.notify("JSDoc is now turned " .. (new_opt and "on" or "off"), vim.log.levels.INFO)
+            end
+
         end
     end
 end

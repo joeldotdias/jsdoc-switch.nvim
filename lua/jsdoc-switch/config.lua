@@ -1,5 +1,3 @@
-local C = {}
-
 ---@class JsdocKeys
 ---@field toggle? string
 ---@field checkStart? string
@@ -8,6 +6,17 @@ local C = {}
 ---@class JsdocSwitchConfig
 ---@field keys JsdocKeys?
 ---@field auto_set_keys boolean?
+
+local C = {
+    keys = {
+        toggle = "<leader>jsd",
+        checkStart = "<leader>jss",
+        checkEnd = "<leader>jse",
+    },
+    auto_set_keys = true,
+    notify = true
+}
+
 
 ---@mod jsdoc-switch.config Configuration
 ---@brief [[
@@ -22,39 +31,25 @@ local C = {}
 ---             checkEnd = "<leader>jse",
 ---         },
 ---         auto_set_keys = true,
+---         notify = true
 ---     }
 ---<
 ---@brief ]]
 
---- Returns the default jsdoc-switch config
----@usage `require('jsdoc-switch.config').get_default_config()`
-function C.get_default_config()
-    return {
-        keys = {
-            toggle = "<leader>jsd",
-            checkStart = "<leader>jss",
-            checkEnd = "<leader>jse",
-        },
-        auto_set_keys = true,
-    }
-end
-
 --- Creates the configuration by merging user_config the default jsdoc-switch config
+---@param user_opts JsdocSwitchConfig
 ---@see jsdoc-switch.setup
----@usage `require('jsdoc-switch.config').make_config()`
-function C.make_config(user_config)
-    local default_config = C.get_default_config()
-    for k, v in pairs(user_config) do
+---@usage `require('jsdoc-switch.config').merge_user_opts()`
+function C.merge_user_opts(user_opts)
+    for k, v in pairs(user_opts) do
         if k == "keys" then
             for kk, kv in pairs(v) do
-                default_config[k][kk] = kv
+                C[k][kk] = kv
             end
         else
-            default_config[k] = v
+            C[k] = v
         end
     end
-
-    return default_config
 end
 
 return C
