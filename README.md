@@ -2,6 +2,12 @@
 
 A tiny plugin for toggling jsdoc checking while preserving the rest of your lsp configuration
 
+
+
+https://github.com/joeldotdias/jsdoc-switch.nvim/assets/138957698/f8e6d118-0178-42f2-b8e1-cd31d96bb483
+
+
+
 ## Why
 I like JSDoc but not all the time. Needed a way to quickly turn it on or off based on the task I was doing.
 
